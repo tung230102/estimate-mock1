@@ -2,7 +2,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import { Avatar, Box, IconButton, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import UserAvatar from "./UserAvatar";
-import { useProfile } from "../features/users/useProfile";
+import useProfile from "../features/users/useProfile";
 
 function Header() {
   const { isLoading, user, isRoles } = useProfile();

@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { apiRefreshToken } from "../../services/apiAuth";
 
-export function useRefreshToken() {
+export default function useRefreshToken() {
   const refresh_token = localStorage.getItem("refresh_token");
 
   const { mutate: refreshToken, isPending: isLoading } = useMutation({

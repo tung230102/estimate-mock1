@@ -11,8 +11,8 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useProfile } from "./users/useProfile";
-import useUploadAvatar from "./users/useUploadAvatar";
+import useProfile from "../features/users/useProfile";
+import useUploadAvatar from "../features/users/useUploadAvatar";
 
 const paperStyle = {
   margin: "20px auto",

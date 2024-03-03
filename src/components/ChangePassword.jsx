@@ -3,7 +3,7 @@ import { LoadingButton } from "@mui/lab";
 import { Avatar, Container, Grid, Paper, TextField } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import { useEffect, useState } from "react";
-import useChangePassword from "./users/useChangePassword";
+import useChangePassword from "../features/users/useChangePassword";
 
 const color = blue[800];
 

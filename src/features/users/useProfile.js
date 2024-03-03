@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { apiGetUserProfile } from "../../services/apiUsers";
 
-export function useProfile() {
+export default function useProfile() {
   const access_token = localStorage.getItem("access_token");
 
   const {
