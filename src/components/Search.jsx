@@ -14,7 +14,7 @@ function Search({ handleSearch, setOpenFilter, openFilter, handleChange }) {
     >
       <InputBase
         sx={{ ml: 1, flex: 1 }}
-        placeholder="Search user"
+        placeholder="Search"
         onChange={(e) => handleSearch(e)}
       />
       <IconButton

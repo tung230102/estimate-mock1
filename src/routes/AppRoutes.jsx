@@ -4,11 +4,13 @@ import AdminLayout from "../components/AdminLayout";
 import AppLayout from "../components/AppLayout";
 import useRefreshToken from "../features/authentication/useRefreshToken";
 import useProfile from "../features/users/useProfile";
+import AnswerPage from "../pages/AnswerPage";
 import DashboardPage from "../pages/DashboardPage";
 import ForgotPassPage from "../pages/ForgotPassPage";
 import LoginPage from "../pages/LoginPage";
 import PlayPage from "../pages/PlayPage";
 import ProfilePage from "../pages/ProfilePage";
+import QuestionsPage from "../pages/QuestionsPage";
 import RegisterPage from "../pages/RegisterPage";
 import UsersPage from "../pages/UsersPage";
 
@@ -31,6 +33,8 @@ function AppRoutes() {
         <Route element={<AdminLayout />}>
           <Route path="/admin" element={<DashboardPage />} />
           <Route path="/users" element={<UsersPage />} />
+          <Route path="/questions" element={<QuestionsPage />} />
+          <Route path="/questions/:questionId" element={<AnswerPage />} />
         </Route>
       )}
 

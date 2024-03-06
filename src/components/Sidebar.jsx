@@ -1,12 +1,11 @@
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
+import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import { Box, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
 import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
-
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-
-import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   return (
@@ -96,6 +95,13 @@ const SidebarComponent = () => {
             title="Manage Users"
             to="/users"
             icon={<PeopleOutlinedIcon />}
+            selected={selected}
+            setSelected={setSelected}
+          />
+          <Item
+            title="Manage Question"
+            to="/questions"
+            icon={<QuestionAnswerIcon />}
             selected={selected}
             setSelected={setSelected}
           />
