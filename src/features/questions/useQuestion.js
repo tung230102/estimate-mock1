@@ -11,9 +11,6 @@ export function useQuestion() {
     queryKey: ["question"],
     queryFn: () => apiGetQuestionById(access_token, questionId),
     enabled: !!access_token,
-    onSuccess: (res) => {
-      console.log("res :>> ", res);
-    },
     onError: (err) => toast.error(err.message),
   });
 

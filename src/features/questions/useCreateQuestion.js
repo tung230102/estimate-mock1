@@ -13,7 +13,6 @@ export function useCreateQuestion() {
   } = useMutation({
     mutationFn: (data) => apiCreateQuestion(access_token, data),
     onSuccess: (res) => {
-      console.log("res :>> ", res);
       if (res && res.statusCode === 201) {
         toast.success(res.message);
       } else if (res && res.status === 400) {

@@ -61,6 +61,7 @@ function Answer() {
         variant="contained"
         startIcon={<AddIcon />}
         onClick={handleOpenCreate}
+        sx={{ m: 1 }}
       >
         Add new
       </Button>

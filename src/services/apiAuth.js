@@ -1,51 +1,52 @@
 import axios from "./customize-axios";
 
-export const apiRegister = (email, name, password) => {
+export const apiRegister = async (email, name, password) => {
   try {
-    const res = axios.post("/authentication/register", {
+    const res = await axios.post("/authentication/register", {
       email,
       name,
       password,
     });
     return res;
   } catch (error) {
-    console.error(error);
     throw new Error(error);
   }
 };
 
-export const apiLogin = (email, password) => {
+export const apiLogin = async (email, password) => {
   try {
-    return axios.post("/authentication/login", { email, password });
+    const res = await axios.post("/authentication/login", { email, password });
+    return res;
   } catch (error) {
-    console.error(error);
     throw new Error(error);
   }
 };
 
-export const apiLogout = (refresh_token) => {
+export const apiLogout = async (refresh_token) => {
   try {
-    return axios.post("/authentication/logout", { refresh_token });
+    const res = await axios.post("/authentication/logout", { refresh_token });
+    return res;
   } catch (error) {
-    console.error(error);
     throw new Error(error);
   }
 };
 
-export const apiRefreshToken = (refresh_token) => {
+export const apiRefreshToken = async (refresh_token) => {
   try {
-    return axios.post("/authentication/refresh-token", { refresh_token });
+    const res = await axios.post("/authentication/refresh-token", {
+      refresh_token,
+    });
+    return res;
   } catch (error) {
-    console.error(error);
     throw new Error(error);
   }
 };
 
-export const apiForgotPass = (email) => {
+export const apiForgotPass = async (email) => {
   try {
-    return axios.post("/authentication/forgot-password", { email });
+    const res = await axios.post("/authentication/forgot-password", { email });
+    return res;
   } catch (error) {
-    console.error(error);
     throw new Error(error);
   }
 };

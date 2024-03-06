@@ -1,28 +1,5 @@
 import axios from "./customize-axios";
 
-// export const apiGetQuestions = async (
-//   access_token,
-//   page,
-//   size,
-//   order,
-//   keyWord,
-//   sortField
-// ) => {
-//   try {
-//     const res = await axios.get(
-//       `/questions?page=${page}&size=${size}&order=${order}&keyWord=${keyWord}&sortField=${sortField}`,
-//       {
-//         headers: {
-//           Authorization: `Bearer ${access_token}`,
-//         },
-//       }
-//     );
-//     return res.data;
-//   } catch (error) {
-//     throw new Error("Questions could not be loaded");
-//   }
-// };
-
 export const apiGetQuestions = async (
   access_token,
   page,
@@ -32,7 +9,6 @@ export const apiGetQuestions = async (
   sortField
 ) => {
   try {
-    console.log("page :>> ", page);
     let url = "/questions";
 
     const queryParams = [];

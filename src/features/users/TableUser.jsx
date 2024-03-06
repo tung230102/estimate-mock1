@@ -68,8 +68,8 @@ function UserTable() {
 
   useEffect(() => {
     if (!isLoading) {
-      setRows(users.data.result);
-      setTotalPages(users.data.totalPages);
+      setRows(users.result);
+      setTotalPages(users.totalPages);
     }
   }, [isLoading, users]);
 
@@ -85,8 +85,8 @@ function UserTable() {
   }
 
   const handleCreate = () => {
-    setRows(users.data.result);
-    setTotalPages(users.data.totalPages);
+    setRows(users.result);
+    setTotalPages(users.totalPages);
     handleModalCreate();
   };
 
@@ -125,7 +125,7 @@ function UserTable() {
       );
       setRows(cloneListUsers);
     } else {
-      setRows(users.data.result);
+      setRows(users.result);
     }
   }, 500);
 
