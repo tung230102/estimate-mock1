@@ -11,6 +11,7 @@ import Question from "./Question";
 import StartScreen from "./StartScreen";
 import Timer from "./Timer";
 import Footer from "./Footer";
+import useProfile from "../users/useProfile";
 
 const app = {
   display: "flex",
@@ -20,31 +21,36 @@ const app = {
 
 function Play() {
   const { status } = useQuiz();
+  const { user } = useProfile();
 
   return (
     <Box sx={app}>
       <Header />
-      <Main>
-        {status === "loading" && <Loader />}
-        {status === "error" && (
-          <>
-            <Loader />
-            <Error />
-          </>
-        )}
-        {status === "ready" && <StartScreen />}
-        {status === "active" && (
-          <>
-            <Progress />
-            <Question />
-            <Footer>
-              <Timer />
-              <NextButton />
-            </Footer>
-          </>
-        )}
-        {status === "finished" && <FinishScreen />}
-      </Main>
+      {user?.status === 401 ? (
+        <p>You can login to play</p>
+      ) : (
+        <Main>
+          {status === "loading" && <Loader />}
+          {status === "error" && (
+            <>
+              <Loader />
+              <Error />
+            </>
+          )}
+          {status === "ready" && <StartScreen />}
+          {status === "active" && (
+            <>
+              <Progress />
+              <Question />
+              <Footer>
+                <Timer />
+                <NextButton />
+              </Footer>
+            </>
+          )}
+          {status === "finished" && <FinishScreen />}
+        </Main>
+      )}
     </Box>
   );
 }

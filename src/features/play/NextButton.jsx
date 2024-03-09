@@ -24,6 +24,14 @@ export default function NextButton() {
       >
         {isLastQuestion ? "Next" : "Finish"}
       </Button>
+      <Button
+        variant="contained"
+        sx={{ float: "right" }}
+        disabled={index === 0}
+        onClick={() => dispatch({ type: "prevQuestion" })}
+      >
+        Prev
+      </Button>
     </>
   );
 }

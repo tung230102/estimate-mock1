@@ -1,8 +1,4 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
-import {
-  apiGetQuestionsPlay,
-  apiQuestionsSubmit,
-} from "../services/apiQuestion";
 import { useQuestionSubmit } from "../features/play/useQuestionSubmit";
 import { useQuestionsPlay } from "../features/play/useQuestionsPlay";
 
@@ -52,6 +48,14 @@ const reducer = (state, action) => {
         id: state.questionId,
         answersSubmittedId: state.answersId,
       };
+      if (state.questionId === 0) {
+        return {
+          ...state,
+          index: state.index + 1,
+          questionId: 0,
+          answersId: [],
+        };
+      }
       return {
         ...state,
         index: state.index + 1,
@@ -61,6 +65,18 @@ const reducer = (state, action) => {
           ...state.listQuestionSubmitted,
           submittedQuestion,
         ],
+      };
+    case "prevQuestion":
+      const updatedSubmittedList = state.listQuestionSubmitted.slice(0, -1);
+      const lastSubmittedQuestion =
+        state.listQuestionSubmitted[state.listQuestionSubmitted.length - 1];
+      console.log(lastSubmittedQuestion);
+      return {
+        ...state,
+        index: state.index - 1,
+        questionId: lastSubmittedQuestion.id,
+        answersId: lastSubmittedQuestion.answersSubmittedId,
+        listQuestionSubmitted: updatedSubmittedList,
       };
     case "finish":
       return {

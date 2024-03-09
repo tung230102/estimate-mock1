@@ -57,6 +57,7 @@ function FinishScreen() {
   } = useQuiz();
 
   const percentage = (totalScore / 10) * 100;
+  const roundedTotalScore = totalScore?.toFixed(2);
 
   let emoji;
   if (percentage === 100) emoji = "🥳👌";
@@ -73,8 +74,9 @@ function FinishScreen() {
           {totalScore ? (
             <>
               <Typography variant="body1">
-                <span>{emoji}</span> You scored <strong>{totalScore}</strong>{" "}
-                out of {10} points. ({Math.ceil(percentage) || 0}%)
+                <span>{emoji}</span> You scored{" "}
+                <strong>{roundedTotalScore}</strong> out of {10} points. (
+                {Math.ceil(percentage) || 0}%)
               </Typography>
               <Button
                 variant="contained"
