@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { apiGetQuestionById } from "../../services/apiQuestion";
-import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
+import { apiGetQuestionById } from "../../services/apiQuestion";
 
 export function useQuestion() {
   const access_token = localStorage.getItem("access_token");
@@ -11,7 +10,6 @@ export function useQuestion() {
     queryKey: ["question"],
     queryFn: () => apiGetQuestionById(access_token, questionId),
     enabled: !!access_token,
-    onError: (err) => toast.error(err.message),
   });
 
   return { isLoading, data, refetch };

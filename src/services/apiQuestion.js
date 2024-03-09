@@ -100,3 +100,16 @@ export const apiGetQuestionsPlay = async (access_token, total) => {
     throw new Error(error);
   }
 };
+
+export const apiQuestionsSubmit = async (access_token, data) => {
+  try {
+    const res = await axios.post("/questions/submit", data, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    return res;
+  } catch (error) {
+    throw new Error(error);
+  }
+};

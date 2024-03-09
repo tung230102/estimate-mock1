@@ -1,9 +1,10 @@
 import { Box } from "@mui/material";
+import Play from "../features/play/Play";
 
 function PlayPage() {
   return (
     <Box p={2}>
-      <h1>Play Page</h1>
+      <Play />
     </Box>
   );
 }

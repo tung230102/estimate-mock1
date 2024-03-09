@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "./App.css";
 import AppRoutes from "./routes/AppRoutes";
+import { QuizProvider } from "./context/QuizContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,26 +16,28 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
 
-        <AppRoutes />
+      <BrowserRouter>
+        <QuizProvider>
+          <AppRoutes />
+        </QuizProvider>
+      </BrowserRouter>
 
-        <ToastContainer
-          position="top-right"
-          autoClose={1000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
-      </QueryClientProvider>
-    </BrowserRouter>
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+    </QueryClientProvider>
   );
 }
 

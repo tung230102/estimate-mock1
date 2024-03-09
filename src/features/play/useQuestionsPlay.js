@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { apiGetQuestionsPlay } from "../../services/apiQuestion";
 
-export function useQuestionsPlay(total) {
+export function useQuestionsPlay() {
   const access_token = localStorage.getItem("access_token");
 
   const {
@@ -10,7 +10,7 @@ export function useQuestionsPlay(total) {
     isPending: isLoading,
     data,
   } = useMutation({
-    mutationFn: () => apiGetQuestionsPlay(access_token, total),
+    mutationFn: (total) => apiGetQuestionsPlay(access_token, total),
 
     onError: (err) => toast.error(err.message),
   });
