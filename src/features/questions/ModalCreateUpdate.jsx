@@ -1,11 +1,11 @@
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
-import { styleBoxSubmit } from "../../components/BoxSubmit";
 import ButtonLoadingSubmit from "../../components/ButtonLoadingSubmit";
 import Heading from "../../components/Heading";
-import { StyledModal } from "../../components/StyledModal";
 import TextFieldCustom from "../../components/TextFieldCustom";
 import UploadFile from "../../components/UploadFile";
+import { styleBoxSubmit } from "../../ui/BoxSubmit";
+import { StyledModal } from "../../ui/StyledModal";
 import { useCreateQuestion } from "./useCreateQuestion";
 import { useUpdateQuestion } from "./useUpdateQuestion";
 import { useUploadThumbnail } from "./useUploadThumbnail";

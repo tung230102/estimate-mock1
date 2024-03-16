@@ -1,10 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { apiGetUsers } from "../../services/apiUsers";
+import { apiGetUsers } from "../../api";
 
-export function useUsers(page) {
-  const getUsers = async (currentPage) => {
-    const access_token = localStorage.getItem("access_token");
-    const res = await apiGetUsers(access_token, currentPage);
+export function useUsers(params) {
+  const getUsers = async () => {
+    const res = await apiGetUsers(params);
     return res;
   };
 
@@ -12,7 +11,10 @@ export function useUsers(page) {
     isLoading,
     data: users,
     error,
-  } = useQuery({ queryKey: ["users", page], queryFn: () => getUsers(page) });
+  } = useQuery({
+    queryKey: ["users"],
+    queryFn: () => getUsers(),
+  });
 
   return { isLoading, error, users };
 }

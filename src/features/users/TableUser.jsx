@@ -17,7 +17,15 @@ function UserTable() {
   const [totalPages, setTotalPages] = useState(0);
   const [page, setPage] = useState(5);
   const [rows, setRows] = useState([]);
-  const { isLoading, users } = useUsers(page);
+  const [queryParams, setQueryParams] = useState({
+    sortField: "created_at",
+    role: "user",
+    keyWord: "",
+    order: "DESC",
+    page: 1,
+    size: 10,
+  });
+  const { isLoading, users } = useUsers(queryParams);
 
   const columns = [
     {
@@ -68,8 +76,8 @@ function UserTable() {
 
   useEffect(() => {
     if (!isLoading) {
-      setRows(users.result);
-      setTotalPages(users.totalPages);
+      setRows(users?.result);
+      setTotalPages(users?.totalPages);
     }
   }, [isLoading, users]);
 
@@ -85,8 +93,8 @@ function UserTable() {
   }
 
   const handleCreate = () => {
-    setRows(users.result);
-    setTotalPages(users.totalPages);
+    setRows(users?.result);
+    setTotalPages(users?.totalPages);
     handleModalCreate();
   };
 
@@ -125,7 +133,7 @@ function UserTable() {
       );
       setRows(cloneListUsers);
     } else {
-      setRows(users.result);
+      setRows(users?.result);
     }
   }, 500);
 
@@ -177,19 +185,23 @@ function UserTable() {
           </Button>
         </Box>
       </Box>
+
       <Loading loading={isLoading}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 },
-            },
-          }}
-          pageSizeOptions={[5, 10]}
-          checkboxSelection
-        />
+        {rows?.length > 0 && (
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+            checkboxSelection
+          />
+        )}
       </Loading>
+
       <ModalCreate
         open={openCreate}
         onClose={handleModalCreate}

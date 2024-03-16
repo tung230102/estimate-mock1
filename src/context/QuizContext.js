@@ -70,7 +70,6 @@ const reducer = (state, action) => {
       const updatedSubmittedList = state.listQuestionSubmitted.slice(0, -1);
       const lastSubmittedQuestion =
         state.listQuestionSubmitted[state.listQuestionSubmitted.length - 1];
-      console.log(lastSubmittedQuestion);
       return {
         ...state,
         index: state.index - 1,

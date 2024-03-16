@@ -1,13 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiUpdateUser } from "../../services/apiUsers";
 import { toast } from "react-toastify";
+import { apiUpdateUser } from "../../api";
 
 export function useUpdateUser() {
-  const access_token = localStorage.getItem("access_token");
   const queryClient = useQueryClient();
 
   const { mutate: updateUser, isPending: isLoading } = useMutation({
-    mutationFn: ({ id, data }) => apiUpdateUser(access_token, id, data),
+    mutationFn: ({ id, data }) => apiUpdateUser(id, data),
     onSuccess: (res) => {
       if (res && res.statusCode === 200) {
         toast.success(res.message);

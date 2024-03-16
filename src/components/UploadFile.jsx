@@ -1,6 +1,6 @@
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Box, Button, CircularProgress } from "@mui/material";
-import { HiddenInput } from "./HiddenInput";
+import { HiddenInput } from "../ui/HiddenInput";
 
 function UploadFile({ onChange, file, onUpload, disabled, progress }) {
   return (

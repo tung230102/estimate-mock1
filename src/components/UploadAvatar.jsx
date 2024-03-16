@@ -10,9 +10,9 @@ import {
   Paper,
   TextField,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import useProfile from "../features/users/useProfile";
+import React, { useState } from "react";
 import useUploadAvatar from "../features/users/useUploadAvatar";
+import { userDataLocalStorage } from "../utils";
 
 const paperStyle = {
   margin: "20px auto",
@@ -36,15 +36,11 @@ const VisuallyHiddenInput = styled("input")({
 function UploadAvatar() {
   const [file, setFile] = useState(null);
   const { changeAvatar, isLoading: isLoadingAvatar } = useUploadAvatar();
-  const { isLoading, user, refetch, isFetching } = useProfile();
+  const { email, avatar, name } = userDataLocalStorage();
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
-
-  useEffect(() => {
-    refetch();
-  }, [isLoadingAvatar]);
 
   const TextFieldStyle = ({
     label,
@@ -82,32 +78,16 @@ function UploadAvatar() {
   };
   return (
     <Container>
-      <Paper
-        elevation={10}
-        style={paperStyle}
-        display="flex"
-        justifyContent="center"
-      >
+      <Paper elevation={10} style={paperStyle}>
         <Box>
-          {isFetching && <p>fetching...</p>}
-          {isLoading ? (
-            <div>loading...</div>
-          ) : (
+          {avatar && email && name && (
             <>
               <Grid align="center">
-                <Avatar src={user?.data?.avatar_link} alt="avatar" />
+                <Avatar src={avatar} alt="avatar" />
                 <h2>UploadAvatar</h2>
               </Grid>
-              <TextFieldStyle
-                label="Email"
-                disabled={!isLoading}
-                value={user?.data?.email}
-              />
-              <TextFieldStyle
-                label="Name"
-                disabled={!isLoading}
-                value={user?.data?.name}
-              />
+              <TextFieldStyle label="Email" disabled={true} value={email} />
+              <TextFieldStyle label="Name" disabled={true} value={name} />
             </>
           )}
           <Box display="flex">
@@ -132,7 +112,7 @@ function UploadAvatar() {
             onClick={handleUpload}
             fullWidth
             sx={{ mb: 2 }}
-            disabled={!file || isLoadingAvatar || isLoading || isFetching}
+            disabled={!file || isLoadingAvatar}
           >
             {isLoadingAvatar ? (
               <CircularProgress size={24} color="inherit" />

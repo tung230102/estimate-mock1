@@ -1,12 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { apiUploadThumbnail } from "../../services/apiQuestion";
+import { apiUploadThumbnail } from "../../api";
 
 export function useUploadThumbnail() {
-  const access_token = localStorage.getItem("access_token");
-
   const { mutate: changeThumbnail, isPending: isLoading } = useMutation({
-    mutationFn: (formData) => apiUploadThumbnail(access_token, formData),
+    mutationFn: (formData) => apiUploadThumbnail(formData),
     onSuccess: (res) => {
       if (res && res.statusCode === 200) {
         toast.success(res.message);

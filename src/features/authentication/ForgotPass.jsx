@@ -4,8 +4,8 @@ import { Avatar, Container, Grid, Paper, TextField } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useMoveBack } from "../../hooks/useMoveBack";
 import TopBar from "../../components/TopBar";
+import { useMoveBack } from "../../hooks/useMoveBack";
 import useForgotPass from "./useForgotPass";
 
 const color = blue[800];
@@ -50,7 +50,7 @@ function ForgotPass() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    forgotPassword(email);
+    forgotPassword({ email });
   };
 
   return (

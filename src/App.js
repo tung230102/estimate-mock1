@@ -3,7 +3,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "./App.css";
-import AppRoutes from "./routes/AppRoutes";
+import AppRoutes from "./components/AppRoutes";
 import { QuizProvider } from "./context/QuizContext";
 
 const queryClient = new QueryClient({

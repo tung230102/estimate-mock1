@@ -6,11 +6,11 @@ import {
   RadioGroup,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { styleBoxSubmit } from "../../components/BoxSubmit";
 import ButtonLoadingSubmit from "../../components/ButtonLoadingSubmit";
 import Heading from "../../components/Heading";
-import { StyledModal } from "../../components/StyledModal";
 import TextFieldCustom from "../../components/TextFieldCustom";
+import { styleBoxSubmit } from "../../ui/BoxSubmit";
+import { StyledModal } from "../../ui/StyledModal";
 import { useCreateAnswer } from "./useCreateAnswer";
 import { useUpdateAnswer } from "./useUpdateAnswer";
 

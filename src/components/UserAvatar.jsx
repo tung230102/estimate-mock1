@@ -10,12 +10,12 @@ import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLogout } from "../features/authentication/useLogout";
+import { getRefreshToken, userDataLocalStorage } from "../utils";
 
-function UserAvatar({ data, isRoles }) {
+function UserAvatar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const { logout, isLoadingLogout } = useLogout();
-  const avatar = data?.avatar_link;
-  const name = data?.name;
+  const { avatar, name, isRoles } = userDataLocalStorage();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -26,8 +26,9 @@ function UserAvatar({ data, isRoles }) {
   };
 
   const handleLogout = () => {
+    const refreshToken = getRefreshToken();
     setAnchorEl(null);
-    logout();
+    logout({ refresh_token: refreshToken });
   };
 
   return (
@@ -54,11 +55,11 @@ function UserAvatar({ data, isRoles }) {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleClose} component={Link} to="/my-profile">
+          <MenuItem onClick={handleClose} component={Link} to="/profile">
             <Typography textAlign="center">Profile</Typography>
           </MenuItem>
           {isRoles && (
-            <MenuItem onClick={handleClose} component={Link} to="/admin">
+            <MenuItem onClick={handleClose} component={Link} to="/dashboard">
               <Typography textAlign="center">Dashboard</Typography>
             </MenuItem>
           )}

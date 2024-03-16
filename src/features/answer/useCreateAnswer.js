@@ -1,13 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { apiCreateAnswer } from "../../services/apiAnswer";
+import { apiCreateAnswer } from "../../api";
 
 export function useCreateAnswer() {
-  const access_token = localStorage.getItem("access_token");
   const queryClient = useQueryClient();
 
   const { mutate: createAnswer, isPending: isLoading } = useMutation({
-    mutationFn: (data) => apiCreateAnswer(access_token, data),
+    mutationFn: (data) => apiCreateAnswer(data),
     onSuccess: (res) => {
       if (res && res.statusCode === 201) {
         toast.success(res.message);

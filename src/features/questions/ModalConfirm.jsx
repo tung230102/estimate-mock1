@@ -1,6 +1,6 @@
 import { Box, Button, styled } from "@mui/material";
 import Heading from "../../components/Heading";
-import { StyledModal } from "../../components/StyledModal";
+import { StyledModal } from "../../ui/StyledModal";
 import { useDeleteQuestion } from "./useDeleteQuestion";
 
 const ButtonContainer = styled(Box)({

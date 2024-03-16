@@ -1,13 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { apiDeleteUser } from "../../services/apiUsers";
+import { apiDeleteUser } from "../../api";
 
 export function useDeleteUser() {
-  const access_token = localStorage.getItem("access_token");
   const queryClient = useQueryClient();
 
   const { isPending: isLoading, mutate: deleteUser } = useMutation({
-    mutationFn: (id) => apiDeleteUser(access_token, id),
+    mutationFn: (id) => apiDeleteUser(id),
     onSuccess: (res) => {
       if (res && res.statusCode === 200) {
         toast.success(res.message);

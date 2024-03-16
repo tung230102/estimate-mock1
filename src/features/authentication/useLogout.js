@@ -1,22 +1,23 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { apiLogout } from "../../services/apiAuth";
+import { apiLogout } from "../../api";
+import { authKey } from "../../constants";
+import { setDataLocalStorage } from "../../utils";
 
 export function useLogout() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const access_token = localStorage.getItem("access_token");
-  const refresh_token = localStorage.getItem("refresh_token");
 
   const { mutate: logout, isPending: isLoading } = useMutation({
-    mutationFn: () => apiLogout(refresh_token),
-    onSuccess: () => {
+    mutationFn: (data) => apiLogout(data),
+    onSuccess: (res) => {
       queryClient.removeQueries();
-      localStorage.removeItem("access_token", access_token);
-      localStorage.removeItem("refresh_token", refresh_token);
-      navigate("/login", { replace: true });
-      toast.success("You have been logged out");
+      if (res && res?.statusCode === 200) {
+        navigate("/login", { replace: true });
+        toast.success(res?.message);
+        setDataLocalStorage(authKey.tokens, {});
+      }
     },
   });
 

@@ -1,17 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
-import { apiChangePassword } from "../../services/apiUsers";
 import { toast } from "react-toastify";
+import { apiChangePassword } from "../../api";
 
 function useChangePassword() {
-  const access_token = localStorage.getItem("access_token");
-
   const {
     mutate: changePassword,
     isPending: isLoading,
     data,
   } = useMutation({
-    mutationFn: ({ oldPassword, newPassword }) =>
-      apiChangePassword(access_token, oldPassword, newPassword),
+    mutationFn: (data) => apiChangePassword(data),
     onSuccess: (res) => {
       if (res && res.statusCode === 200) {
         toast.success(res.message);

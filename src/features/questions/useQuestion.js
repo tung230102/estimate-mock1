@@ -1,15 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { apiGetQuestionById } from "../../services/apiQuestion";
+import { apiGetQuestionById } from "../../api";
 
 export function useQuestion() {
-  const access_token = localStorage.getItem("access_token");
-  const { questionId } = useParams();
+  const { id } = useParams();
 
   const { isLoading, data, refetch } = useQuery({
     queryKey: ["question"],
-    queryFn: () => apiGetQuestionById(access_token, questionId),
-    enabled: !!access_token,
+    queryFn: () => apiGetQuestionById(id),
   });
 
   return { isLoading, data, refetch };

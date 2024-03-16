@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { apiRegister } from "../../services/apiAuth";
+import { apiRegister } from "../../api";
 import { useNavigate } from "react-router-dom";
 
 function useRegister() {
@@ -10,8 +10,7 @@ function useRegister() {
     isPending: isLoading,
     data,
   } = useMutation({
-    mutationFn: ({ email, name, password }) =>
-      apiRegister(email, name, password),
+    mutationFn: (data) => apiRegister(data),
     onSuccess: (res) => {
       if (res && res.statusCode === 201) {
         navigate("/login");

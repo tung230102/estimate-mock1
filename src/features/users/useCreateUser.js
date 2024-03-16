@@ -1,9 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiCreateUser } from "../../services/apiUsers";
 import { toast } from "react-toastify";
+import { apiCreateUser } from "../../api";
 
 export function useCreateUser() {
-  const access_token = localStorage.getItem("access_token");
   const queryClient = useQueryClient();
 
   const {
@@ -11,7 +10,7 @@ export function useCreateUser() {
     isPending: isLoading,
     data,
   } = useMutation({
-    mutationFn: (data) => apiCreateUser(access_token, data),
+    mutationFn: (data) => apiCreateUser(data),
     onSuccess: (res) => {
       if (res && res.statusCode === 201) {
         toast.success(res.message);

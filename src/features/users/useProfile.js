@@ -1,9 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { apiGetUserProfile } from "../../services/apiUsers";
+import { apiGetUserProfile } from "../../api";
 
 export default function useProfile() {
-  const access_token = localStorage.getItem("access_token");
-
   const {
     isLoading,
     data: user,
@@ -11,7 +9,7 @@ export default function useProfile() {
     isFetching,
   } = useQuery({
     queryKey: ["user"],
-    queryFn: () => apiGetUserProfile(access_token),
+    queryFn: () => apiGetUserProfile(),
   });
 
   return {

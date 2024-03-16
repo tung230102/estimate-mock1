@@ -1,12 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { apiUploadAvatar } from "../../services/apiUsers";
+import { apiUploadAvatar } from "../../api";
 
 function useUploadAvatar() {
-  const access_token = localStorage.getItem("access_token");
-
   const { mutate: changeAvatar, isPending: isLoading } = useMutation({
-    mutationFn: (formData) => apiUploadAvatar(access_token, formData),
+    mutationFn: (formData) => apiUploadAvatar(formData),
     onSuccess: (res) => {
       if (res && res.statusCode === 200) {
         toast.success(res.message);
