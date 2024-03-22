@@ -1,11 +1,21 @@
+import { Suspense } from "react";
 import { Navigate } from "react-router-dom";
-import { isAuthenticated, userDataLocalStorage } from "../../utils";
+import { Loader } from "~/common";
+import { isAuthenticated, userDataLocalStorage } from "~/utils";
 
-const AuthRouter = ({ children, isPrivate }) => {
+const AuthRouter = ({ children, permissions }) => {
   const isLoggedIn = isAuthenticated();
-  const { isRoles } = userDataLocalStorage();
+  const { userData } = userDataLocalStorage();
 
-  if (isPrivate && !isRoles) {
+  const hasPermission = () => {
+    if (!permissions) return true;
+
+    return permissions.some((permission) =>
+      userData?.role?.includes(permission)
+    );
+  };
+
+  if (!hasPermission()) {
     return <Navigate to="/404" replace />;
   }
 
@@ -13,7 +23,7 @@ const AuthRouter = ({ children, isPrivate }) => {
     return <Navigate to="/login" replace />;
   }
 
-  return children;
+  return <Suspense fallback={<Loader />}>{children}</Suspense>;
 };
 
 export default AuthRouter;

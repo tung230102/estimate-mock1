@@ -1,16 +1,17 @@
 import { Box } from "@mui/material";
-import { useQuiz } from "../../context/QuizContext";
-import Error from "./Error";
-import FinishScreen from "./FinishScreen";
-import Footer from "./Footer";
-import Header from "./Header";
-import Loader from "./Loader";
-import Main from "./Main";
-import NextButton from "./NextButton";
-import Progress from "./Progress";
-import Question from "./Question";
-import StartScreen from "./StartScreen";
-import Timer from "./Timer";
+import { useQuiz } from "~/context/QuizContext";
+import { useTitleDynamic } from "~/hooks";
+import Error from "./components/Error";
+import FinishScreen from "./components/FinishScreen";
+import Loader from "./components/Loader";
+import NextButton from "./components/NextButton";
+import ProgressBar from "./components/ProgressBar";
+import QuestionCard from "./components/QuestionCard";
+import StartScreen from "./components/StartScreen";
+import CountdownTimer from "./components/CountdownTimer";
+import Footer from "./layouts/Footer";
+import Header from "./layouts/Header";
+import Main from "./layouts/Main";
 
 const app = {
   display: "flex",
@@ -19,12 +20,12 @@ const app = {
 };
 
 function Play() {
+  useTitleDynamic("Play");
   const { status } = useQuiz();
 
   return (
     <Box sx={app}>
       <Header />
-
       <Main>
         {status === "loading" && <Loader />}
         {status === "error" && (
@@ -36,10 +37,10 @@ function Play() {
         {status === "ready" && <StartScreen />}
         {status === "active" && (
           <>
-            <Progress />
-            <Question />
+            <ProgressBar />
+            <QuestionCard />
             <Footer>
-              <Timer />
+              <CountdownTimer />
               <NextButton />
             </Footer>
           </>

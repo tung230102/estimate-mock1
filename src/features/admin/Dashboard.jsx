@@ -1,6 +1,9 @@
 import { Box } from "@mui/material";
+import { useTitleDynamic } from "~/hooks";
 
 function Dashboard() {
+  useTitleDynamic("Dashboard");
+
   return (
     <Box p={2}>
       <Box flex={6} p={2}>
@@ -118,28 +121,3 @@ function Dashboard() {
 }
 
 export default Dashboard;
-
-// /user?size=4&order=ASC&sortField=id&role1=admin&role2=user&keyWord=da&page=5
-
-// sortField: Field want to sort by ( id, email, name, created_at , updated_at)
-// role1: Role want to filter ( admin, user)
-// role2: Role want to filter ( admin, user)
-// keyWord: Key word want to search in name, email
-// order ASC or DESC
-// size: current size
-// page: current page
-
-// export const apiGetUsers = async (access_token, page) => {
-//   try {
-//     const res = axios.get(`/user?page=${page}`, {
-//       headers: {
-//         Authorization: `Bearer ${access_token}`,
-//       },
-//     });
-//     return res;
-//   } catch (error) {
-//     console.error(error);
-//     throw new Error("Users could not be loaded");
-//   }
-// };
-// update may code

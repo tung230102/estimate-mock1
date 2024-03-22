@@ -1,13 +1,34 @@
-import { Box } from "@mui/material";
-import React from "react";
-import ChangePassword from "../../components/ChangePassword";
-import UploadAvatar from "../../components/UploadAvatar";
+import { Box, Grid, Paper } from "@mui/material";
+import { useTitleDynamic } from "~/hooks";
+import ChangePasswordField from "./ChangePasswordField";
+import UploadAvatarField from "./UploadAvatarField";
+
+const paperStyle = {
+  margin: "20px auto",
+  padding: "20px",
+  minWidth: "360px",
+  maxWidth: "400px",
+};
 
 function Profile() {
+  useTitleDynamic("Profile");
+
   return (
-    <Box display="flex" flexDirection={{ xs: "column", md: "row" }} gap={2}>
-      <ChangePassword />
-      <UploadAvatar />
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container columns={{ xs: 4, sm: 8, md: 12 }}>
+        <Grid item xs={1} />
+        <Grid item xs={5}>
+          <Paper elevation={8} style={paperStyle}>
+            <ChangePasswordField />
+          </Paper>
+        </Grid>
+        <Grid item xs={5}>
+          <Paper elevation={8} style={paperStyle}>
+            <UploadAvatarField />
+          </Paper>
+        </Grid>
+        <Grid item xs={1} />
+      </Grid>
     </Box>
   );
 }

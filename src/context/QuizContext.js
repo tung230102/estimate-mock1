@@ -1,6 +1,7 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
-import { useQuestionSubmit } from "../features/play/useQuestionSubmit";
-import { useQuestionsPlay } from "../features/play/useQuestionsPlay";
+import { createContext, useContext, useReducer } from "react";
+import { getListQuestionsPlay, questionsSubmit } from "../api";
+import { statusCode } from "../constants";
+import { showToast } from "../common";
 
 const QuizContext = createContext();
 const TIME_QUESTIONS = 30;
@@ -40,7 +41,7 @@ const reducer = (state, action) => {
       }
       return {
         ...state,
-        questionId: question.id,
+        questionId: question?.id,
         answersId: answersId,
       };
     case "nextQuestion":
@@ -73,7 +74,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         index: state.index - 1,
-        questionId: lastSubmittedQuestion.id,
+        questionId: lastSubmittedQuestion?.id,
         answersId: lastSubmittedQuestion.answersSubmittedId,
         listQuestionSubmitted: updatedSubmittedList,
       };
@@ -123,33 +124,39 @@ const QuizProvider = ({ children }) => {
 
   const numQuestions = questions.length;
 
-  const { isLoading, createPlay, data } = useQuestionsPlay();
+  const handlePlay = (data) => {
+    getListQuestionsPlay(data)
+      .then((res) => {
+        const { message, data } = res || {};
 
-  useEffect(() => {
-    if (!isLoading && data) {
-      if (data.statusCode === 400) {
+        if (res?.statusCode === statusCode.BAD_REQUEST) {
+          dispatch({ type: "dataFailed" });
+          const errors = Array.isArray(message) ? message[0] : message;
+          showToast(errors, "error");
+        } else if (res?.statusCode === statusCode.OK) {
+          dispatch({ type: "dataReceived", payload: data });
+        } else {
+          showToast("Play failed!", "error");
+        }
+      })
+      .catch(() => {
+        showToast("An error occurred while fetching questions", "error");
+      });
+  };
+
+  const handleSubmitQuestion = (data) => {
+    questionsSubmit(data).then((res) => {
+      if (res?.statusCode === statusCode.BAD_REQUEST) {
         dispatch({ type: "dataFailed" });
+        showToast(res?.message, "error");
+      } else if (res?.statusCode === statusCode.OK) {
+        showToast(res?.message);
+        dispatch({ type: "finish", payload: res?.data });
       } else {
-        dispatch({ type: "dataReceived", payload: data });
+        showToast("Submit Question fail!", "error");
       }
-    }
-  }, [isLoading, data]);
-
-  const {
-    isLoading: isLoadingSubmit,
-    submitQuestion,
-    data: dataSubmit,
-  } = useQuestionSubmit();
-
-  useEffect(() => {
-    if (!isLoadingSubmit && dataSubmit) {
-      if (dataSubmit.statusCode === 400) {
-        dispatch({ type: "dataFailed" });
-      } else {
-        dispatch({ type: "finish", payload: dataSubmit?.data });
-      }
-    }
-  }, [isLoadingSubmit, dataSubmit]);
+    });
+  };
 
   const value = {
     status,
@@ -161,12 +168,10 @@ const QuizProvider = ({ children }) => {
     listQuestionChecked,
     totalScore,
     highScore,
-
     numQuestions,
     dispatch,
-    createPlay,
-    submitQuestion,
-    isLoadingSubmit,
+    handlePlay,
+    handleSubmitQuestion,
   };
 
   return <QuizContext.Provider value={value}>{children}</QuizContext.Provider>;

@@ -4,7 +4,7 @@ import {
   adminServiceDelete,
 } from "../services";
 
-export const apiCreateAnswer = async (data) => {
+export const createAnswer = async (data) => {
   const res = await adminServicePost({
     target: "answers",
     data,
@@ -12,7 +12,7 @@ export const apiCreateAnswer = async (data) => {
   return res;
 };
 
-export const apiUpdateAnswer = async (id, data) => {
+export const updateAnswer = async (id, data) => {
   const res = await adminServicePatch({
     target: `answers/${id}`,
     data,
@@ -20,7 +20,7 @@ export const apiUpdateAnswer = async (id, data) => {
   return res;
 };
 
-export const apiDeleteAnswer = async (id) => {
+export const removeAnswer = async (id) => {
   const res = await adminServiceDelete({
     target: `answers/${id}`,
   });

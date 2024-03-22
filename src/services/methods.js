@@ -1,5 +1,7 @@
 const errorHandler = (e) => {
-  console.log("QQ AxiosError: ", e);
+  if (process.env.NODE_ENV === "development") {
+    console.log("QQ AxiosError: ", e);
+  }
   if (e) {
     return Promise.resolve(e);
   }

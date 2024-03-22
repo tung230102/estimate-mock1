@@ -1,13 +1,13 @@
 import LoginIcon from "@mui/icons-material/Login";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
+import { Heading } from "~/common";
 
 function TopBar() {
   return (
     <Box display="flex" justifyContent="space-between" px={2} py={1}>
       <Box display="flex" alignItems="center">
-        <Typography
-          variant="h6"
+        <Heading
           noWrap
           sx={{
             mr: 2,
@@ -19,7 +19,7 @@ function TopBar() {
           to="/"
         >
           Quizify
-        </Typography>
+        </Heading>
       </Box>
       <Box display="flex">
         <IconButton component={Link} to="/login">

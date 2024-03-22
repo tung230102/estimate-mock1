@@ -19,12 +19,13 @@ export const userDataLocalStorage = () => {
   const email = userData?.email;
   const avatar = userData?.avatarLink;
   const name = userData?.userName;
-  const isRoles = userData?.role?.includes("admin");
+  const isAdmin = userData?.role?.includes("admin");
 
   return {
     email,
     avatar,
     name,
-    isRoles,
+    isAdmin,
+    userData,
   };
 };

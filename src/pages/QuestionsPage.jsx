@@ -1,7 +1,7 @@
-import Question from "../features/questions/Question";
+import QuestionManagement from "../features/questions/QuestionManagement";
 
 function QuestionsPage() {
-  return <Question />;
+  return <QuestionManagement />;
 }
 
 export default QuestionsPage;

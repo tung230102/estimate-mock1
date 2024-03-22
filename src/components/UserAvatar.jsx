@@ -8,14 +8,21 @@ import {
 } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useLogout } from "../features/authentication/useLogout";
-import { getRefreshToken, userDataLocalStorage } from "../utils";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../api";
+import { showToast } from "../common";
+import { authKey, statusCode } from "../constants";
+import {
+  getRefreshToken,
+  setDataLocalStorage,
+  userDataLocalStorage,
+} from "../utils";
 
 function UserAvatar() {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
-  const { logout, isLoadingLogout } = useLogout();
-  const { avatar, name, isRoles } = userDataLocalStorage();
+
+  const { avatar, name, isAdmin } = userDataLocalStorage();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -28,7 +35,18 @@ function UserAvatar() {
   const handleLogout = () => {
     const refreshToken = getRefreshToken();
     setAnchorEl(null);
-    logout({ refresh_token: refreshToken });
+
+    logout({ refresh_token: refreshToken }).then((res) => {
+      if (res?.statusCode === statusCode.OK) {
+        showToast(res?.message);
+        navigate("/login", { replace: true });
+        setDataLocalStorage(authKey.tokens, {});
+      } else if (res?.statusCode === statusCode.BAD_REQUEST) {
+        showToast(res?.message, "error");
+      } else {
+        showToast("Logout fail!", "error");
+      }
+    });
   };
 
   return (
@@ -58,12 +76,12 @@ function UserAvatar() {
           <MenuItem onClick={handleClose} component={Link} to="/profile">
             <Typography textAlign="center">Profile</Typography>
           </MenuItem>
-          {isRoles && (
+          {isAdmin && (
             <MenuItem onClick={handleClose} component={Link} to="/dashboard">
               <Typography textAlign="center">Dashboard</Typography>
             </MenuItem>
           )}
-          <MenuItem onClick={handleLogout} disabled={isLoadingLogout}>
+          <MenuItem onClick={handleLogout}>
             <Typography textAlign="center">Logout</Typography>
           </MenuItem>
         </Menu>

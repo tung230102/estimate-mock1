@@ -71,7 +71,7 @@ const handleResponseSuccess = (response) => {
   if (response.status === statusCode.UNAUTHORIZED) {
     handleLogout();
   }
-  return response.data ? response.data : { statusCode: response.status };
+  return response.data ? response.data : {};
 };
 
 const handleResponseError = (error) => {

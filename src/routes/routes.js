@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { HeaderOnly } from "../layout";
+import { HeaderOnly } from "../layouts";
 
 const DashboardPage = lazy(() => import("../pages/DashboardPage"));
 const PlayPage = lazy(() => import("../pages/PlayPage"));
@@ -11,41 +11,38 @@ const AnswerPage = lazy(() => import("../pages/AnswerPage"));
 const routes = [
   {
     path: "/play",
-    title: "Play",
     component: PlayPage,
     layout: HeaderOnly,
-    isPrivate: false,
+    permissions: ["user"],
   },
   {
     path: "/profile",
-    title: "Profile",
     component: ProfilePage,
     layout: HeaderOnly,
-    isPrivate: false,
+    permissions: ["admin", "user"],
   },
   {
     path: "/dashboard",
-    title: "Dashboard",
     component: DashboardPage,
-    isPrivate: true,
+    permissions: ["admin"],
   },
   {
     path: "/users",
     title: "Users Managements",
     component: UsersPage,
-    isPrivate: true,
+    permissions: ["admin"],
   },
   {
     path: "/questions",
     title: "Questions Managements",
     component: QuestionsPage,
-    isPrivate: true,
+    permissions: ["admin"],
   },
   {
     path: "/questions/:id",
     title: "Answers Managements",
     component: AnswerPage,
-    isPrivate: true,
+    permissions: ["admin"],
   },
 ];
 

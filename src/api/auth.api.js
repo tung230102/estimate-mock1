@@ -1,6 +1,6 @@
 import { adminServicePost } from "../services";
 
-export const apiRegister = async (data) => {
+export const register = async (data) => {
   const res = await adminServicePost({
     target: "authentication/register",
     data,
@@ -8,7 +8,7 @@ export const apiRegister = async (data) => {
   return res;
 };
 
-export const apiLogin = async (data) => {
+export const login = async (data) => {
   const res = await adminServicePost({
     target: "authentication/login",
     data,
@@ -16,7 +16,7 @@ export const apiLogin = async (data) => {
   return res;
 };
 
-export const apiLogout = async (data) => {
+export const logout = async (data) => {
   const res = await adminServicePost({
     target: "authentication/logout",
     data,
@@ -24,7 +24,7 @@ export const apiLogout = async (data) => {
   return res;
 };
 
-export const apiForgotPass = async (data) => {
+export const forgotPassword = async (data) => {
   const res = await adminServicePost({
     target: "authentication/forgot-password",
     data,

@@ -6,19 +6,7 @@ import {
   adminServiceUpload,
 } from "../services";
 
-const getListUserSortFields =
-  "id" | "email" | "name" | "created_at" | "updated_at";
-
-const getUsersParams = {
-  sortField: getListUserSortFields,
-  role: "admin" | "user",
-  keyWord: "",
-  order: "ASC" | "DESC",
-  page: 1,
-  size: 10,
-};
-
-export const apiGetUsers = async (params = getUsersParams) => {
+export const getListUsers = async (params) => {
   const data = await adminServiceGet({
     target: "user",
     params,
@@ -27,15 +15,7 @@ export const apiGetUsers = async (params = getUsersParams) => {
   return data?.data;
 };
 
-export const apiGetUserProfile = async () => {
-  const data = await adminServiceGet({
-    target: "user/my-profile",
-  });
-
-  return data?.data;
-};
-
-export const apiChangePassword = async (data) => {
+export const changePassword = async (data) => {
   const res = await adminServicePatch({
     target: "user/change-password",
     data,
@@ -43,7 +23,7 @@ export const apiChangePassword = async (data) => {
   return res;
 };
 
-export const apiUploadAvatar = async (data) => {
+export const uploadAvatar = async (data) => {
   const res = await adminServiceUpload({
     target: "user/upload-avatar",
     data,
@@ -51,7 +31,7 @@ export const apiUploadAvatar = async (data) => {
   return res;
 };
 
-export const apiCreateUser = async (data) => {
+export const createUser = async (data) => {
   const res = await adminServicePost({
     target: "user",
     data,
@@ -59,7 +39,7 @@ export const apiCreateUser = async (data) => {
   return res;
 };
 
-export const apiUpdateUser = async (id, data) => {
+export const updateUser = async (id, data) => {
   const res = await adminServicePatch({
     target: `user/${id}`,
     data,
@@ -67,7 +47,7 @@ export const apiUpdateUser = async (id, data) => {
   return res;
 };
 
-export const apiDeleteUser = async (id) => {
+export const removeUser = async (id) => {
   const res = await adminServiceDelete({
     target: `user/${id}`,
   });

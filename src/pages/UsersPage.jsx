@@ -1,7 +1,7 @@
-import UserTable from "../features/users/TableUser";
+import UserManagement from "../features/users/UserManagement";
 
 function UsersPage() {
-  return <UserTable />;
+  return <UserManagement />;
 }
 
 export default UsersPage;

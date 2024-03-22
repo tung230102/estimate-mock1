@@ -1,7 +1,7 @@
-import Answer from "../features/answer/Answer";
+import AnswerManagement from "../features/answer/AnswerManagement";
 
 function AnswerPage() {
-  return <Answer />;
+  return <AnswerManagement />;
 }
 
 export default AnswerPage;
