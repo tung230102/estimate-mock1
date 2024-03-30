@@ -7,14 +7,13 @@ import { createUser, getListUsers, removeUser, updateUser } from "~/api";
 import {
   CommonButton,
   CommonConfirmationModal,
-  CommonSearchBox,
   CommonSingleSelect,
   CommonTable,
   Loading,
   showToast,
 } from "~/common";
 import { statusCode } from "~/constants";
-import { useTitleDynamic } from "~/hooks";
+import { useCache, useTitleDynamic } from "~/hooks";
 import { dateFormat } from "~/utils";
 import UserCreateUpdateModal from "./UserCreateUpdateModal";
 
@@ -150,9 +149,11 @@ function UserManagement() {
     setQueryParams((pre) => ({ ...pre, ...filterValue, page: 1 }));
   };
 
-  const queryListUser = () => {
+  const { getDataCache } = useCache();
+
+  const queryListUser = async () => {
     setIsLoading(true);
-    getListUsers(queryParams).then((res) => {
+    getDataCache(queryParams, getListUsers).then((res) => {
       if (res) {
         const users = res?.result;
         const totalPage = res?.totalPages;
@@ -169,8 +170,9 @@ function UserManagement() {
     createUser(data).then((res) => {
       if (res?.statusCode === statusCode.CREATED) {
         showToast(res?.message);
-        queryListUser();
         setShowModalCreate(false);
+
+        queryListUser();
       } else if (res?.statusCode === statusCode.BAD_REQUEST) {
         showToast(res?.message, "error");
       } else {
@@ -183,9 +185,10 @@ function UserManagement() {
     updateUser(userToUpdate.id, data).then((res) => {
       if (res?.statusCode === statusCode.OK) {
         showToast(res?.message);
-        queryListUser();
         setShowModalCreate(false);
         setUserToUpdate({});
+
+        queryListUser();
       } else if (res?.statusCode === statusCode.BAD_REQUEST) {
         showToast(res?.message, "error");
       } else {
@@ -198,6 +201,7 @@ function UserManagement() {
     removeUser(userToDelete.id).then((res) => {
       if (res?.statusCode === statusCode.OK) {
         showToast(res?.message);
+
         queryListUser();
       } else if (res?.message) {
         showToast(res?.message, "error");
@@ -215,51 +219,8 @@ function UserManagement() {
 
   return (
     <Box p={2}>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 2,
-        }}
-      >
-        <CommonSearchBox
-          placeholder="Search by email, user name"
-          onChange={handleChangeSearch}
-          onClear={handleClearFilter}
-          onSubmit={handleSubmitFilter}
-          dropdownContent={
-            <Box>
-              <CommonSingleSelect
-                label="Role 1"
-                value={filterValue.role1}
-                options={[
-                  { label: "Admin", value: "admin" },
-                  { label: "User", value: "user" },
-                ]}
-                onChange={(value) => handleChangeFilter("role1", value)}
-              />
-              <CommonSingleSelect
-                label="Role 2"
-                value={filterValue.role2}
-                options={[
-                  { label: "Admin", value: "admin" },
-                  { label: "User", value: "user" },
-                ]}
-                onChange={(value) => handleChangeFilter("role2", value)}
-              />
-            </Box>
-          }
-        />
-        <CommonButton
-          startIcon={<AddIcon />}
-          onClick={() => setShowModalCreate(true)}
-        >
-          Create user
-        </CommonButton>
-      </Box>
       <Loading loading={isLoading}>
-        {listUsers && listUsers.length > 0 && (
+        {listUsers?.length >= 0 && (
           <CommonTable
             rows={listUsers}
             columns={columns}
@@ -268,7 +229,41 @@ function UserManagement() {
             count={totalPages}
             onChangePage={handleChangePage}
             value={initQueryParamValue}
-          />
+            // search
+            placeholder="Search by email, user name"
+            onChange={handleChangeSearch}
+            onClear={handleClearFilter}
+            onSubmit={handleSubmitFilter}
+            dropdownContent={
+              <Box>
+                <CommonSingleSelect
+                  label="Role 1"
+                  value={filterValue.role1}
+                  options={[
+                    { label: "Admin", value: "admin" },
+                    { label: "User", value: "user" },
+                  ]}
+                  onChange={(value) => handleChangeFilter("role1", value)}
+                />
+                <CommonSingleSelect
+                  label="Role 2"
+                  value={filterValue.role2}
+                  options={[
+                    { label: "Admin", value: "admin" },
+                    { label: "User", value: "user" },
+                  ]}
+                  onChange={(value) => handleChangeFilter("role2", value)}
+                />
+              </Box>
+            }
+          >
+            <CommonButton
+              startIcon={<AddIcon />}
+              onClick={() => setShowModalCreate(true)}
+            >
+              Create User
+            </CommonButton>
+          </CommonTable>
         )}
       </Loading>
       <UserCreateUpdateModal

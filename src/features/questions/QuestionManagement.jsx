@@ -14,7 +14,6 @@ import {
 import {
   CommonButton,
   CommonConfirmationModal,
-  CommonSearchBox,
   CommonTable,
   Loading,
   showToast,
@@ -204,27 +203,8 @@ function QuestionManagement() {
 
   return (
     <Box p={2}>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 2,
-        }}
-      >
-        <CommonSearchBox
-          placeholder="Search by title question"
-          onChange={handleChangeSearch}
-        />
-        <CommonButton
-          startIcon={<AddIcon />}
-          onClick={() => setShowModalCreate(true)}
-        >
-          Create question
-        </CommonButton>
-      </Box>
       <Loading loading={isLoading}>
-        {listQuestions && listQuestions.length > 0 && (
+        {listQuestions?.length >= 0 && (
           <CommonTable
             rows={listQuestions}
             columns={columns}
@@ -233,7 +213,16 @@ function QuestionManagement() {
             count={totalPages}
             onChangePage={handleChangePage}
             value={initQueryParamValue}
-          />
+            placeholder="Search by title question"
+            onChange={handleChangeSearch}
+          >
+            <CommonButton
+              startIcon={<AddIcon />}
+              onClick={() => setShowModalCreate(true)}
+            >
+              Create Question
+            </CommonButton>
+          </CommonTable>
         )}
       </Loading>
       <QuestionCreateUpdateModal

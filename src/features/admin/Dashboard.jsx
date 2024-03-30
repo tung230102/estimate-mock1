@@ -1,11 +1,13 @@
 import { Box } from "@mui/material";
+
 import { useTitleDynamic } from "~/hooks";
 
-function Dashboard() {
+function Dashboard({ children }) {
   useTitleDynamic("Dashboard");
 
   return (
     <Box p={2}>
+      {children}
       <Box flex={6} p={2}>
         <div>
           1. Support user registration function, login, forgot password is

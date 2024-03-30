@@ -175,31 +175,23 @@ const AnswerManagement = () => {
 
   return (
     <Box p={2}>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 2,
-        }}
-      >
-        <CommonButton variant="text" onClick={moveBack}>
-          &larr; Go back
-        </CommonButton>
-        <CommonButton
-          startIcon={<AddIcon />}
-          onClick={() => setShowModalCreate(true)}
-        >
-          Create answer
-        </CommonButton>
-      </Box>
+      <CommonButton variant="text" onClick={moveBack}>
+        &larr; Go back
+      </CommonButton>
       <Loading loading={isLoading}>
         {listAnswers?.length > 0 && (
           <CommonTable
             rows={listAnswers}
             columns={columns}
             showPagination={false}
-          />
+          >
+            <CommonButton
+              startIcon={<AddIcon />}
+              onClick={() => setShowModalCreate(true)}
+            >
+              Create Answer
+            </CommonButton>
+          </CommonTable>
         )}
       </Loading>
       <AnswerCreateUpdateModal

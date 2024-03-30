@@ -1,5 +1,6 @@
-import { Pagination } from "@mui/material";
+import { Box, Pagination } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import { CommonSearchBox } from "../CommonSearchBox/CommonSearchBox";
 
 export const CommonTable = ({
   rows = [],
@@ -10,9 +11,36 @@ export const CommonTable = ({
   onChangePage = () => {},
   value = {},
   showPagination = true,
+  // search
+  placeholder = "",
+  onChange = null,
+  onClear = () => {},
+  onSubmit = () => {},
+  dropdownContent = null,
+  children,
 }) => {
   return (
     <>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          m: -1,
+          mb: 1,
+        }}
+      >
+        {onChange && (
+          <CommonSearchBox
+            placeholder={placeholder}
+            onChange={onChange}
+            onClear={onClear}
+            onSubmit={onSubmit}
+            dropdownContent={dropdownContent}
+          />
+        )}
+        {children}
+      </Box>
       <DataGrid
         // data
         rows={rows}
